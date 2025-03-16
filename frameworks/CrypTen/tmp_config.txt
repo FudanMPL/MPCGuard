@@ -1,0 +1,5 @@
+{
+    "real_programs": [  ["python", "./test_ass_truncpr.py"]  ],
+    "names": [ "ass_truncpr"],
+    "ideal_programs": [ "F_truncpr"]
+}

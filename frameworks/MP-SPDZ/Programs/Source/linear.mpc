@@ -1,0 +1,7 @@
+a = sint.get_input_from(1)
+print_ln("from input %s", a, print_secrets=True)
+b = sint(1)
+
+c = a + 2 *b + 3
+
+print_ln("from output %s", c, print_secrets=True)

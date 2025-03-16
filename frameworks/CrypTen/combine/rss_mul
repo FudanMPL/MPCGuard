@@ -1,0 +1,13 @@
+
+Leakage detected for input with secret1: -5374770517643919356 secret2: 0
+  accuracy_real: 0.52375 length: 6
+  accuracy_real: 1.0 length: 9
+  accuracy_real: 0.4925 length: 7
+  accuracy_real: 0.51 length: 8
+Leakage detected for input with secret1: -5374770517643919356 secret2: 0 length: 9 full length: 12
+Leakage detected for output with secret: 1048607
+  accuracy_real: 1.0 length: 5
+  accuracy_real: 0.5 length: 2
+  accuracy_real: 0.555 length: 3
+  accuracy_real: 1.0 length: 4
+Leakage detected for output with secret: 1048607 length: 4 full length: 10

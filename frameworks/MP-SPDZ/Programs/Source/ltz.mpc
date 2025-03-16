@@ -1,0 +1,5 @@
+a = sint.get_input_from(1)
+print_ln("from input %s", a, print_secrets=True)
+c = a < 0
+
+print_ln("from output %s", c, print_secrets=True)

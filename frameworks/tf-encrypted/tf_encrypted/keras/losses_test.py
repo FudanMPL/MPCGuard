@@ -1,0 +1,107 @@
+# pylint: disable=missing-docstring
+import unittest
+
+import numpy as np
+import tensorflow as tf
+
+import tf_encrypted as tfe
+
+tf.keras.utils.set_random_seed(42)
+
+
+class TestLosses(unittest.TestCase):
+    def test_binary_crossentropy(self):
+
+        y_true_np = np.array([1, 1, 0, 0]).astype(float)
+        y_pred_np = np.array([0.9, 0.1, 0.9, 0.1]).astype(float)
+
+        y_true = tfe.define_private_variable(y_true_np)
+        y_pred = tfe.define_private_variable(y_pred_np)
+
+        loss = tfe.keras.losses.BinaryCrossentropy()
+        out = loss(y_true, y_pred)
+        der_for_y_pred = loss.grad(y_true, y_pred)
+
+        actual = out.reveal().to_native()
+        actual_der = der_for_y_pred.reveal().to_native()
+
+        y_true = tf.convert_to_tensor(y_true_np)
+        y_pred = tf.convert_to_tensor(y_pred_np)
+        loss = tf.keras.losses.BinaryCrossentropy()
+        expected = loss(y_true, y_pred)
+        expected_der = (y_true * (y_pred - 1) + (1 - y_true) * y_pred) / 4
+
+        np.testing.assert_allclose(actual, expected, rtol=1e-1, atol=1e-1)
+        np.testing.assert_allclose(actual_der, expected_der, rtol=1e-1, atol=1e-1)
+
+    def test_binary_crossentropy_from_logits(self):
+
+        y_true_np = np.array([1, 1, 0, 0]).astype(float)
+        y_pred_np = np.array([0.9, 0.1, 0.9, 0.1]).astype(float)
+
+        y_true = tfe.define_private_variable(y_true_np)
+        y_pred = tfe.define_private_variable(y_pred_np)
+
+        loss = tfe.keras.losses.BinaryCrossentropy(from_logits=True)
+        out = loss(y_true, y_pred)
+        der_for_y_pred = loss.grad(y_true, y_pred)
+
+        actual = out.reveal().to_native()
+        actual_der = der_for_y_pred.reveal().to_native()
+
+        y_true = tf.convert_to_tensor(y_true_np)
+        y_pred = tf.convert_to_tensor(y_pred_np)
+        loss = tf.keras.losses.BinaryCrossentropy(from_logits=True)
+        expected = loss(y_true, y_pred)
+        expected_der = (tf.sigmoid(y_pred) - y_true) / 4
+
+        np.testing.assert_allclose(actual, expected, rtol=1e-1, atol=1e-1)
+        np.testing.assert_allclose(actual_der, expected_der, rtol=1e-1, atol=1e-1)
+
+    def test_mean_squared_error(self):
+        y_true_np = np.array([1, 2, 3, 4]).astype(float)
+        y_pred_np = np.array([0.9, 2.1, 3.2, 4.1]).astype(float)
+
+        y_true = tfe.define_private_variable(y_true_np)
+        y_pred = tfe.define_private_variable(y_pred_np)
+
+        loss = tfe.keras.losses.MeanSquaredError()
+        out = loss(y_true, y_pred)
+        actual = out.reveal().to_native()
+
+        y_true = tf.convert_to_tensor(y_true_np)
+        y_pred = tf.convert_to_tensor(y_pred_np)
+
+        loss = tf.keras.losses.MeanSquaredError()
+        expected = loss(y_true, y_pred)
+
+        np.testing.assert_allclose(actual, expected, rtol=1e-1, atol=1e-1)
+
+    def test_categorical_crossentropy_from_logits(self):
+
+        y_true_np = np.array([[0, 1, 0], [0, 0, 1]]).astype(float)
+        y_pred_np = np.array([[0.05, 0.95, 0], [0.1, 0.8, 0.1]]).astype(float)
+
+        with tfe.protocol.ABY3():
+            y_true = tfe.define_private_variable(y_true_np)
+            y_pred = tfe.define_private_variable(y_pred_np)
+
+            loss = tfe.keras.losses.CategoricalCrossentropy(from_logits=True)
+            out = loss(y_true, y_pred)
+            der_for_y_pred = loss.grad(y_true, y_pred)
+
+            actual = out.reveal().to_native()
+            actual_der = der_for_y_pred.reveal().to_native()
+
+        y_true = tf.convert_to_tensor(y_true_np)
+        y_pred = tf.convert_to_tensor(y_pred_np)
+        loss = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
+        expected = loss(y_true, y_pred)
+        expected_der = (tf.keras.activations.softmax(y_pred) - y_true) / 2
+
+        np.testing.assert_allclose(actual, expected, rtol=1e-1, atol=1e-1)
+        np.testing.assert_allclose(actual_der, expected_der, rtol=1e-1, atol=1e-1)
+
+
+if __name__ == "__main__":
+    unittest.main()

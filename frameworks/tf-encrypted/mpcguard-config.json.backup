@@ -1,0 +1,6 @@
+{
+    "real_programs": [  ["python", "./test_securenn_mul.py"],  ["python", "./test_securenn_linear.py"], ["python", "./test_securenn_ltz.py"],  ["python", "./test_securenn_truncpr.py"] , ["python", "./test_rss_mul.py"], ["python", "./test_rss_linear.py"],  ["python", "./test_rss_ltz.py"],  ["python", "./test_rss_eq.py"],  ["python", "./test_rss_truncpr.py"] ],
+    "names": [ "securenn_mul", "securenn_linear", "securenn_ltz",  "securenn_truncpr","rss_mul",  "rss_linear", "rss_ltz", "rss_eq",  "rss_truncpr" ],
+    "ideal_programs": ["F_ass_mul", "F_ass_linear", "F_ass_ltz",  "F_ass_truncpr", "F_rss_mul", "F_rss_linear",  "F_rss_ltz", "F_rss_eq",   "F_rss_truncpr"],
+    "party_numbers": [2, 2, 2, 2,  3, 3, 3, 3, 3]
+}

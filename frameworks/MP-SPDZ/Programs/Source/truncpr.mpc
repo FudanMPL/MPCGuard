@@ -1,0 +1,7 @@
+program.use_trunc_pr=True
+
+a = sint.get_input_from(1)
+print_ln("from input %s", a, print_secrets=True)
+c = a.round(23, 10)
+
+print_ln("from output %s", c, print_secrets=True)

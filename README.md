@@ -1,6 +1,5 @@
 # MPCGuard: Detecting Data Leakage Vulnerabilities in MPC Implementations
 
-## Overview
 
 This repository contains the source code for the paper **"Is MPC Secure? Leveraging Neural Network Classifiers to Detect Data Leakage Vulnerabilities in MPC Implementations"**, which has been accepted for publication at **IEEE Symposium on Security and Privacy (S&P) 2025**.
 

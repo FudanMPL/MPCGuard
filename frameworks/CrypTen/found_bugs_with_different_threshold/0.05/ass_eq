@@ -1,0 +1,58 @@
+
+accuracy_ideal: 0.53375  accuracy_real: 1.0
+Leakage detected for input with secret1: -5374770517643919356 secret2: 0
+  accuracy_real: 0.6125 length: 37
+  accuracy_real: 0.9925 length: 18
+  accuracy_real: 0.5325 length: 9
+  accuracy_real: 0.5325 length: 13
+  accuracy_real: 0.5375 length: 15
+  accuracy_real: 0.51875 length: 16
+  accuracy_real: 0.995 length: 17
+Leakage detected for input with secret1: -5374770517643919356 secret2: 0 length: 17 full length: 75  File "/home/lgp/MPCGuard/frameworks/CrypTen/./test_ass_eq.py", line 65, in <module>
+    test(args.secret)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/context.py", line 94, in wrapper
+    process.start()
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/popen_fork.py", line 71, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/context.py", line 30, in _launch
+    return_value = func(*func_args, **func_kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/./test_ass_eq.py", line 17, in test
+    z_enc = x_enc == 0
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/common/functions/logic.py", line 55, in eq
+    return 1 - self.ne(y)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/mpc.py", line 254, in ne
+    return 1 - self.eq(y)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/mpc.py", line 247, in eq
+    return (self - y)._eqz_2PC()
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/mpc.py", line 267, in _eqz_2PC
+    x0._tensor = x0._tensor.eq(x1._tensor)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 300, in eq
+    return circuit.eq(self, y)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/circuit.py", line 136, in eq
+    P = __P_circuit(bitwise_equal)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/circuit.py", line 103, in __P_circuit
+    P &= P << shift  # using lshift since rshift was modified to arithmetic
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 241, in __iand__
+    self.share.set_(beaver.AND(self, y).share.data)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/beaver.py", line 186, in AND
+    eps_del = BinarySharedTensor.reveal_batch([x ^ a, y ^ b])
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 382, in reveal_batch
+    return comm.get().all_reduce(shares, op=op, batched=True)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/communicator/communicator.py", line 234, in logging_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/communicator/distributed_communicator.py", line 212, in all_reduce
+    my_print_tool.my_print_or_match(tensor.data, "all_reduce")
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/my_print_tool.py", line 79, in my_print_or_match
+    traceback.print_stack(file=f)

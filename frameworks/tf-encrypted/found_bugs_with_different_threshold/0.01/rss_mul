@@ -1,0 +1,13 @@
+
+accuracy_ideal: 0.5425  accuracy_real: 0.55875
+Leakage detected for input with secret1: -9223372036854775808 secret2: 9223372036854775807
+  accuracy_real: 0.5275 length: 7
+  accuracy_real: 0.54125 length: 11
+  accuracy_real: 0.535 length: 13
+  accuracy_real: 0.54125 length: 14
+Leakage detected for input with secret1: -9223372036854775808 secret2: 9223372036854775807 length: 15 full length: 15  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_rss_mul.py", line 162, in <module>
+    test(args.secret, 1)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_rss_mul.py", line 151, in test
+    my_print_tool.my_print_or_match(result.shares[0][1].value, "output")
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/my_print_tool.py", line 93, in my_print_or_match
+    traceback.print_stack(file=f)

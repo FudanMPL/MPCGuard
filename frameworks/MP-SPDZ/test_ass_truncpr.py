@@ -3,7 +3,7 @@ import os
 from tqdm import tqdm
 import subprocess
 import shutil
-
+import random
 
 from test_data_process_tool import *
 
@@ -51,11 +51,17 @@ if __name__ == '__main__':
         metavar="FILE",
         type=str
     )
+    parser.add_argument(
+        "--real_view_data_dir",
+        metavar="FILE",
+        type=str
+    )
     args = parser.parse_args()
     bug_file = args.bug_file
+
     # set envirnment variables SECRET, NO_RECORD, VUL_INDEX
     os.environ["SECRET"] = str(args.secret)
-    folder_path = "./real-data/ass_truncpr/s-"+str(args.secret)+"/"
+    folder_path = args.real_view_data_dir
     if args.no_record:
         os.environ["NO_RECORD"] = str(args.no_record)
     else:
@@ -72,25 +78,24 @@ if __name__ == '__main__':
     for i in tqdm(range(args.try_times)):
         # set envirnment variables FILE_ID
         os.environ["FILE_ID"] = str(i)
-        command0 = ["./semi2k-party.x", "0", "truncpr", "-OF", ".", "-pn", "14752", "-h", "localhost",  "-b", "1", "-B", "3"]
-        command1 = ["./semi2k-party.x", "1", "truncpr", "-OF", ".", "-pn", "14752", "-h", "localhost",  "-b", "1", "-B", "3"]
-        command2 = ["./semi2k-party.x", "2", "truncpr", "-OF", ".", "-pn", "14752", "-h", "localhost",  "-b", "1", "-B", "3"]
-        process0 = subprocess.Popen(command0, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        process1 = subprocess.Popen(command1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        process2 = subprocess.Popen(command2, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        command0 = ["./semi2k-party.x", "0", "truncpr", "-OF", ".", "-pn", str(14752), "-h", "localhost",  "-b", "1", "-B", "3"]
+        command1 = ["./semi2k-party.x", "1", "truncpr", "-OF", ".", "-pn", str(14752), "-h", "localhost",  "-b", "1", "-B", "3"]
+        while True:
+            flag = True
+            # random a port
+            process0 = subprocess.Popen(command0, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            process1 = subprocess.Popen(command1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            output0, _ = process0.communicate()
+            output1, _ = process1.communicate()
+     
+            flag = get_data_from_output_str(output0, folder_path+"P-0-{}-"+str(i)) & flag
+            flag = get_data_from_output_str(output1, folder_path+"P-1-{}-"+str(i)) & flag
 
-        output0, _ = process0.communicate()
-        output1, _ = process1.communicate()
-        output2, _ = process2.communicate()
-
-
-        get_data_from_output_str(output0, folder_path+"P-0-{}-"+str(i))
-        get_data_from_output_str(output1, folder_path+"P-1-{}-"+str(i))
-        get_data_from_output_str(output2, folder_path+"P-2-{}-"+str(i))
-
-
-        if output0.find("==============") != -1:
-            tmp = output0.split("==============")
-            with open(bug_file, "a") as f:
-                f.write("\n")
-                f.write(tmp[1])
+            if output0.find("==============") != -1:
+                flag = True
+                tmp = output0.split("==============")
+                with open(bug_file, "a") as f:
+                    f.write("\n")
+                    f.write(tmp[1])
+            if flag:
+                break

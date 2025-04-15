@@ -1,0 +1,29 @@
+
+accuracy_ideal: 0.515  accuracy_real: 0.58875
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808
+  accuracy_real: 0.5425 length: 24
+  accuracy_real: 0.52625 length: 12
+  accuracy_real: 0.55125 length: 6
+  accuracy_real: 0.54 length: 3
+  accuracy_real: 0.51 length: 1
+  accuracy_real: 0.54875 length: 2
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808 length: 2 full length: 48  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_rss_ltz.py", line 152, in <module>
+    test(args.secret, 1)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_rss_ltz.py", line 126, in test
+    x = provide_input(player_name="inputter-0")
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 547, in compute_func_wrapper
+    return self.define_local_computation(
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 644, in define_local_computation
+    return share_output(outputs)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 599, in share_output
+    x = self._share_and_wrap(w, apply_scaling, share_type, player)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 899, in _share_and_wrap
+    shares = self._share(secret, share_type, player)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 874, in _share
+    shares[0][1] = secret.factory.sample_seeded_uniform(
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/tensor/native.py", line 162, in sample_seeded_uniform
+    value = secure_random.seeded_random_uniform(
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/operations/secure_random/secure_random.py", line 117, in seeded_random_uniform
+    my_print_tool.my_print_or_match(res, "secure_random seeded_random_uniform")
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/my_print_tool.py", line 93, in my_print_or_match
+    traceback.print_stack(file=f)

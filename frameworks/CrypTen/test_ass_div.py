@@ -53,10 +53,14 @@ if __name__ == "__main__":
         default="bugs",
     )
 
+    parser.add_argument(
+        "--real_view_data_dir",
+        metavar="FILE",
+        type=str
+    )
     args = parser.parse_args()
-    my_print_tool.bug_file = args.bug_dir + "bug_in_ass_div.txt"
-
-    my_print_tool.folder_path = f"./real-data/ass_div/s-{args.secret}"
+    my_print_tool.bug_file = args.bug_file
+    my_print_tool.folder_path = args.real_view_data_dir
   
     if args.no_record:
         my_print_tool.vulnerability_message_idx = args.vul_index

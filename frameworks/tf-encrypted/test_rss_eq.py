@@ -74,15 +74,22 @@ if __name__ == "__main__":
         metavar="FILE",
         type=str
     )
+    parser.add_argument(
+        "--real_view_data_dir",
+        metavar="FILE",
+        type=str
+    )
     args = parser.parse_args()
     import my_print_tool
     my_print_tool.bug_file = args.bug_file
 
 
     my_print_tool.is_record = not args.no_record
-    my_print_tool.folder_path = "real-data/rss_eq/s-"+str(args.secret)+"/"
+    my_print_tool.folder_path = str(args.real_view_data_dir) + "/"
     my_print_tool.init(args.secret)
     my_print_tool.vulnerability_message_idx = args.vul_index
+
+
 
 
     # set tfe config
@@ -131,12 +138,13 @@ if __name__ == "__main__":
         result = prot.equal(x, 0)
         with tf.device(prot.servers[0].device_name):
             my_print_tool.my_print_or_match(result.shares[0][0].value, "output 2")
-
+            my_print_tool.my_print_or_match(result.shares[0][1].value, "output")
         with tf.device(prot.servers[1].device_name):
             my_print_tool.my_print_or_match(result.shares[1][0].value, "output 2")
-
+            my_print_tool.my_print_or_match(result.shares[1][1].value, "output")
         with tf.device(prot.servers[2].device_name):
             my_print_tool.my_print_or_match(result.shares[2][0].value, "output 2")
+            my_print_tool.my_print_or_match(result.shares[2][1].value, "output")
   
 
 

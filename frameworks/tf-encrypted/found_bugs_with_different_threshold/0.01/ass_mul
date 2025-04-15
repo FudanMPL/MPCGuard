@@ -1,0 +1,27 @@
+
+accuracy_ideal: 0.52875  accuracy_real: 0.54625
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808
+  accuracy_real: 0.51 length: 3
+  accuracy_real: 0.54 length: 4
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808 length: 4 full length: 6  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_ass_mul.py", line 150, in <module>
+    test(args.secret, 1)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_ass_mul.py", line 140, in test
+    result = x * y
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 1753, in __mul__
+    return self.prot.mul(self, other)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/protocol.py", line 117, in cache_nodes
+    result = func(self, *args, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 1023, in mul
+    return self.dispatch("mul", x, y)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 1470, in dispatch
+    return func(self, *args, **kwargs)  # pylint: disable=not-callable
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 2948, in _mul_private_private
+    return prot.mul(prot.mask(x), prot.mask(y))
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 1012, in mask
+    x_masked = _mask_private(self, x)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 4086, in _mask_private
+    a0 = a0.identity()
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/tensor/native.py", line 292, in identity
+    my_print_tool.my_print_or_match(value, "identity")
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/my_print_tool.py", line 93, in my_print_or_match
+    traceback.print_stack(file=f)

@@ -1,0 +1,13 @@
+real_program: ["python", "./test_rss_mul.py"]
+ideal_program: F_rss_mul
+party_number: 3
+corrupted_party:
+  - 0
+victim_party: 1
+protocol_execution_times: 2000
+accuracy_verify_gap: 0.2
+use_model: MPCNN
+run_mode: identify
+bug_file: found_bugs_with_different_threshold/0.2/rss_mul
+real_view_data_dir: real_view_data/rss_mul/
+epochs: 200

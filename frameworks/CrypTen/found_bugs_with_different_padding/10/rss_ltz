@@ -1,0 +1,3 @@
+
+accuracy_ideal: 0.545  accuracy_real: 0.885
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808

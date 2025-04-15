@@ -1,0 +1,18 @@
+
+accuracy_ideal: 0.53125  accuracy_real: 0.5525
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808
+  accuracy_real: 0.52875 length: 165
+  accuracy_real: 0.52375 length: 247
+  accuracy_real: 0.5375 length: 288
+  accuracy_real: 0.53125 length: 309
+  accuracy_real: 0.52625 length: 319
+  accuracy_real: 0.5375 length: 324
+  accuracy_real: 0.525 length: 327
+  accuracy_real: 0.5275 length: 328
+  accuracy_real: 0.5325 length: 329
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808 length: 330 full length: 330  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_ass_ltz.py", line 142, in <module>
+    test(args.secret, 1)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_ass_ltz.py", line 134, in test
+    my_print_tool.my_print_or_match(result.share0.value, "output")
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/my_print_tool.py", line 93, in my_print_or_match
+    traceback.print_stack(file=f)

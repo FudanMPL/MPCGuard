@@ -1,0 +1,14 @@
+real_program: ["python", "./test_ass_linear.py"]
+ideal_program: F_ass_linear
+party_number: 2
+corrupted_party:
+  - 0
+victim_party: 1
+protocol_execution_times: 2000
+accuracy_verify_gap: 0.1
+use_model: MPCNN
+run_mode: identify
+bug_file: found_bugs_with_different_padding/4/ass_linear
+real_view_data_dir: real_view_data/ass_linear/
+epochs: 200
+padding: 4

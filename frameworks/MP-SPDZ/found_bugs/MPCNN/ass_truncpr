@@ -1,0 +1,19 @@
+
+accuracy_ideal: 0.5525  accuracy_real: 1.0
+Leakage detected for output with secret: 1049088
+Leakage detected for output with secret: 1049088 length: 1 full length: 1
+
+ 0# my_print_or_match(long long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) in /home/lgp/MPCGuard/frameworks/MP-SPDZ/libSPDZ.so
+ 1# Z2<64>::randomize(PRNG&, int) in ./semi2k-party.x
+ 2# Semi2kShare<64> PRNG::get<Semi2kShare<64> >() in ./semi2k-party.x
+ 3# SemiInput<Semi2kShare<64> >::finalize_other(int, Semi2kShare<64>&, octetStream&, int) in ./semi2k-party.x
+ 4# InputBase<Semi2kShare<64> >::finalize(int, int) in ./semi2k-party.x
+ 5# void InputBase<Semi2kShare<64> >::finalize<IntInput<SignedZ2<64> > >(SubProcessor<Semi2kShare<64> >&, int, int const*, int) in ./semi2k-party.x
+ 6# InputBase<Semi2kShare<64> >::input_mixed(SubProcessor<Semi2kShare<64> >&, std::vector<int, std::allocator<int> > const&, int, bool) in ./semi2k-party.x
+ 7# void Instruction::execute<Semi2kShare<64>, SemiShare<gf2n_long> >(Processor<Semi2kShare<64>, SemiShare<gf2n_long> >&) const in ./semi2k-party.x
+ 8# void Program::execute<Semi2kShare<64>, SemiShare<gf2n_long> >(Processor<Semi2kShare<64>, SemiShare<gf2n_long> >&) const in ./semi2k-party.x
+ 9# thread_info<Semi2kShare<64>, SemiShare<gf2n_long> >::Sub_Main_Func() in ./semi2k-party.x
+10# thread_info<Semi2kShare<64>, SemiShare<gf2n_long> >::Main_Func_With_Purge() in ./semi2k-party.x
+11# thread_info<Semi2kShare<64>, SemiShare<gf2n_long> >::Main_Func(void*) in ./semi2k-party.x
+12# 0x00007F07B3512609 in /lib/x86_64-linux-gnu/libpthread.so.0
+13# clone in /lib/x86_64-linux-gnu/libc.so.6

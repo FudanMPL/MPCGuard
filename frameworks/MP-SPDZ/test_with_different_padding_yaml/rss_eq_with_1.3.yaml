@@ -1,0 +1,14 @@
+real_program: ["python", "./test_rss_eq.py"]
+ideal_program: F_rss_eq
+party_number: 3
+corrupted_party:
+  - 0
+victim_party: 1
+protocol_execution_times: 2000
+accuracy_verify_gap: 0.1
+use_model: MPCNN
+run_mode: identify
+bug_file: found_bugs_with_different_padding/1.3/rss_eq
+real_view_data_dir: real_view_data/rss_eq/
+epochs: 200
+padding: 1.3

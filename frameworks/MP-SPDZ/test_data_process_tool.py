@@ -1,3 +1,15 @@
+import os
+import subprocess
+
+def execute_protocol(commands):
+    outputs = []
+    for p, command in enumerate(commands):
+        result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        outputs.append(result)
+        if not get_data_from_output_str(result, folder_path+"P-{}-{}-"+str(i)):
+            return None
+    return outputs
+
 def get_data_from_output_str(output, path_format):
     lines = output.split("\n")
     for line in lines:
@@ -28,8 +40,11 @@ def get_data_from_output_str(output, path_format):
                 print(e)
                 print(line)
                 continue
-            with open(filename, "a") as f:
+            with open(filename, "w") as f:
                 f.write(str(data)+"\n")
-
+    # if file do not exist, return False
+    if not os.path.exists(path_format.format("input")) or not os.path.exists(path_format.format("output")) or not os.path.exists(path_format.format("view")):
+        return False
+    return True
 
     

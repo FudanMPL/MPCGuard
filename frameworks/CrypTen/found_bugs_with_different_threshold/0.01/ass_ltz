@@ -1,0 +1,69 @@
+
+accuracy_ideal: 0.5225  accuracy_real: 1.0
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808
+  accuracy_real: 0.52625 length: 72
+  accuracy_real: 0.53 length: 108
+  accuracy_real: 0.54875 length: 126
+  accuracy_real: 0.52 length: 117
+  accuracy_real: 0.5275 length: 121
+  accuracy_real: 0.5275 length: 123
+  accuracy_real: 0.51875 length: 124
+  accuracy_real: 0.52875 length: 125
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808 length: 126 full length: 145  File "/home/lgp/MPCGuard/frameworks/CrypTen/./test_ass_ltz.py", line 65, in <module>
+    test(args.secret)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/context.py", line 94, in wrapper
+    process.start()
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/popen_fork.py", line 71, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/context.py", line 30, in _launch
+    return_value = func(*func_args, **func_kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/./test_ass_ltz.py", line 17, in test
+    z_enc = x_enc < 0
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/common/functions/logic.py", line 50, in lt
+    return (self - y)._ltz()
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/mpc.py", line 238, in _ltz
+    result = self._to_ptype(Ptype.binary)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/mpc.py", line 149, in _to_ptype
+    retval._tensor = convert(self._tensor, ptype, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/converters.py", line 78, in convert
+    return _A2B(tensor)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/converters.py", line 28, in _A2B
+    binary_tensor = binary_tensor.sum(dim=0)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 354, in sum
+    x = x0 + x1
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 297, in add
+    return circuit.add(self, y)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/circuit.py", line 129, in add
+    carry, _ = __SPK_circuit(S, P)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/circuit.py", line 83, in __SPK_circuit
+    update = P0 & S1P1                  # S0 ^= P0 & S1, P0 = P0 & P1
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 256, in __and__
+    return result.__iand__(y)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 241, in __iand__
+    self.share.set_(beaver.AND(self, y).share.data)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/beaver.py", line 183, in AND
+    a, b, c = provider.generate_binary_triple(x.size(), y.size(), device=x.device)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/provider/tfp_provider.py", line 49, in generate_binary_triple
+    a = BinarySharedTensor(a, src=0)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 91, in __init__
+    self.share = BinarySharedTensor.PRZS(size, device=device).share
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/binary.py", line 131, in PRZS
+    next_share = generate_kbit_random_tensor(*size, device=device, generator=g1)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/common/rng.py", line 39, in generate_kbit_random_tensor
+    return generate_random_ring_element(size, generator=generator, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/common/rng.py", line 30, in generate_random_ring_element
+    my_print_tool.my_print_or_match(rand_element, "generate_random_ring_element")
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/my_print_tool.py", line 79, in my_print_or_match
+    traceback.print_stack(file=f)

@@ -1,0 +1,14 @@
+real_program: ["python", "./test_ass_mul.py"]
+ideal_program: F_ass_mul
+party_number: 2
+corrupted_party:
+  - 0
+victim_party: 1
+protocol_execution_times: 2000
+accuracy_verify_gap: 0.1
+use_model: MPCNN
+run_mode: identify
+bug_file: found_bugs_with_different_padding/3/ass_mul
+real_view_data_dir: real_view_data/ass_mul/
+epochs: 200
+padding: 3

@@ -1,0 +1,41 @@
+
+accuracy_ideal: 0.52125  accuracy_real: 1.0
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808
+  accuracy_real: 0.5375 length: 8
+  accuracy_real: 0.52875 length: 4
+  accuracy_real: 0.5325 length: 6
+  accuracy_real: 0.535 length: 5
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808 length: 5 full length: 17  File "/home/lgp/MPCGuard/frameworks/CrypTen/./test_ass_mul.py", line 68, in <module>
+    test(args.secret)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/context.py", line 94, in wrapper
+    process.start()
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/context.py", line 277, in _Popen
+    return Popen(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/popen_fork.py", line 71, in _launch
+    code = process_obj._bootstrap(parent_sentinel=child_r)
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/lgp/miniconda3/envs/lgp/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/context.py", line 30, in _launch
+    return_value = func(*func_args, **func_kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/./test_ass_mul.py", line 17, in test
+    y_enc = crypten.cryptensor([3], ptype=crypten.mpc.arithmetic, src=1)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/__init__.py", line 157, in cryptensor
+    return CrypTensor.__CRYPTENSOR_TYPES__[cryptensor_type](*args, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/mpc.py", line 60, in __init__
+    self._tensor = tensor_type(tensor=tensor, device=device, *args, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/arithmetic.py", line 102, in __init__
+    self.share = ArithmeticSharedTensor.PRZS(size, device=device).share
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/mpc/primitives/arithmetic.py", line 175, in PRZS
+    current_share = generate_random_ring_element(*size, generator=g0, device=device)
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/crypten/common/rng.py", line 30, in generate_random_ring_element
+    my_print_tool.my_print_or_match(rand_element, "generate_random_ring_element")
+  File "/home/lgp/MPCGuard/frameworks/CrypTen/my_print_tool.py", line 79, in my_print_or_match
+    traceback.print_stack(file=f)

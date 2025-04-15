@@ -1,0 +1,13 @@
+real_program: ["python", "./test_rss_eq.py"]
+ideal_program: F_rss_eq
+party_number: 3
+corrupted_party:
+  - 0
+victim_party: 1
+protocol_execution_times: 2000
+accuracy_verify_gap: 0.1
+use_model: BasicDNN
+run_mode: Detect
+bug_file: found_bugs_with_different_model/BasicDNN/rss_eq
+real_view_data_dir: real_view_data/rss_eq/
+epochs: 200

@@ -1,0 +1,63 @@
+
+accuracy_ideal: 0.525  accuracy_real: 0.63125
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808
+  accuracy_real: 0.5275 length: 46
+  accuracy_real: 0.59 length: 69
+  accuracy_real: 0.53875 length: 57
+  accuracy_real: 0.54 length: 51
+  accuracy_real: 0.5375 length: 48
+  accuracy_real: 0.5425 length: 47
+Leakage detected for input with secret1: 1049088 secret2: -9223372036854775808 length: 47 full length: 93  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_rss_eq.py", line 153, in <module>
+    test(args.secret, 1)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_rss_eq.py", line 138, in test
+    result = prot.equal(x, 0)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/protocol.py", line 117, in cache_nodes
+    result = func(self, *args, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 1684, in equal
+    return self.dispatch("equal", x, y)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 2038, in dispatch
+    return func(self, *args, **kwargs)  # pylint: disable=not-callable
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 3053, in _equal_private_public
+    return _equal_zero_private(prot, x - y)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 3064, in _equal_zero_private
+    msb = prot.msb(pack)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/protocol.py", line 117, in cache_nodes
+    result = func(self, *args, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 1561, in msb
+    return self.dispatch("msb", x)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 2038, in dispatch
+    return func(self, *args, **kwargs)  # pylint: disable=not-callable
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 3920, in _msb_private
+    return _bit_extract_private(prot, x, x.backing_dtype.nbits - 1)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 3908, in _bit_extract_private
+    carry = prot.carry(operand1, operand2, pos=i - 1)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/protocol.py", line 117, in cache_nodes
+    result = func(self, *args, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 1724, in carry
+    return self.dispatch("carry", x, y, pos)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 2038, in dispatch
+    return func(self, *args, **kwargs)  # pylint: disable=not-callable
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 3579, in _carry_private_private
+    return _carry_computation(prot, x, y, pos)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 3611, in _carry_computation
+    P = Ps[0] & Ps[1]
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3_tensors.py", line 327, in __and__
+    return self.bitwise_and(other)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3_tensors.py", line 320, in bitwise_and
+    return self.prot.and_(self, other)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/protocol.py", line 117, in cache_nodes
+    result = func(self, *args, **kwargs)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 1488, in and_
+    return self.dispatch("and", x, y)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 2038, in dispatch
+    return func(self, *args, **kwargs)  # pylint: disable=not-callable
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 3161, in _and_private_private
+    a0, a1, a2 = prot._gen_zero_sharing(
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/aby3/aby3.py", line 957, in _gen_zero_sharing
+    f00 = factory.sample_seeded_uniform(
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/tensor/native.py", line 162, in sample_seeded_uniform
+    value = secure_random.seeded_random_uniform(
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/operations/secure_random/secure_random.py", line 117, in seeded_random_uniform
+    my_print_tool.my_print_or_match(res, "secure_random seeded_random_uniform")
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/my_print_tool.py", line 93, in my_print_or_match
+    traceback.print_stack(file=f)

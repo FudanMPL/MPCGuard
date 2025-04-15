@@ -1,0 +1,24 @@
+
+accuracy_ideal: 0.545  accuracy_real: 1.0
+Leakage detected for output with secret: 1049088
+  accuracy_real: 1.0 length: 1
+Leakage detected for output with secret: 1049088 length: 1 full length: 3  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_ass_truncpr.py", line 146, in <module>
+    test(args.secret, 1)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/./test_ass_truncpr.py", line 129, in test
+    x = provide_input(player_name="inputter-0")
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 498, in compute_func_wrapper
+    return self.define_local_computation(
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 616, in define_local_computation
+    return share_output(outputs)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 551, in share_output
+    x = self._share_and_wrap(w, apply_scaling)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 841, in _share_and_wrap
+    s0, s1 = self._share(secret)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/protocol/pond/pond.py", line 818, in _share
+    share0 = secret.factory.sample_seeded_uniform(secret.shape, seed)
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/tensor/native.py", line 162, in sample_seeded_uniform
+    value = secure_random.seeded_random_uniform(
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/tf_encrypted/operations/secure_random/secure_random.py", line 117, in seeded_random_uniform
+    my_print_tool.my_print_or_match(res, "secure_random seeded_random_uniform")
+  File "/home/lgp/MPCGuard/frameworks/tf-encrypted/my_print_tool.py", line 93, in my_print_or_match
+    traceback.print_stack(file=f)

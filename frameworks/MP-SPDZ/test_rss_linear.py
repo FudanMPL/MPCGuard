@@ -51,11 +51,17 @@ if __name__ == '__main__':
         metavar="FILE",
         type=str
     )
+    parser.add_argument(
+        "--real_view_data_dir",
+        metavar="FILE",
+        type=str
+    )
     args = parser.parse_args()
     bug_file = args.bug_file
+
     # set envirnment variables SECRET, NO_RECORD, VUL_INDEX
     os.environ["SECRET"] = str(args.secret)
-    folder_path = "./real-data/rss_linear/s-"+str(args.secret)+"/"
+    folder_path = args.real_view_data_dir
     if args.no_record:
         os.environ["NO_RECORD"] = str(args.no_record)
     else:
@@ -76,23 +82,26 @@ if __name__ == '__main__':
         command0 = ["./replicated-ring-party.x", "0", "linear", "-OF", ".", "-pn", "14752", "-h", "localhost",  "-b", "1", "-B", "3"]
         command1 = ["./replicated-ring-party.x", "1", "linear", "-OF", ".", "-pn", "14752", "-h", "localhost",  "-b", "1", "-B", "3"]
         command2 = ["./replicated-ring-party.x", "2", "linear", "-OF", ".", "-pn", "14752", "-h", "localhost",  "-b", "1", "-B", "3"]
-        process0 = subprocess.Popen(command0, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        process1 = subprocess.Popen(command1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        process2 = subprocess.Popen(command2, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        while True:
+            flag = True
+            # random a port
+            process0 = subprocess.Popen(command0, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            process1 = subprocess.Popen(command1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            process2 = subprocess.Popen(command2, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-        output0, _ = process0.communicate()
-        output1, _ = process1.communicate()
-        output2, _ = process2.communicate()
+            output0, _ = process0.communicate()
+            output1, _ = process1.communicate()
+            output2, _ = process2.communicate()
+     
+            flag = get_data_from_output_str(output0, folder_path+"P-0-{}-"+str(i)) & flag
+            flag = get_data_from_output_str(output1, folder_path+"P-1-{}-"+str(i)) & flag
+            flag = get_data_from_output_str(output2, folder_path+"P-2-{}-"+str(i)) & flag
 
-
-        get_data_from_output_str(output0, folder_path+"P-0-{}-"+str(i))
-        get_data_from_output_str(output1, folder_path+"P-1-{}-"+str(i))
-        get_data_from_output_str(output2, folder_path+"P-2-{}-"+str(i))
-
-
-        if output0.find("==============") != -1:
-            tmp = output0.split("==============")
-
-            with open(bug_file, "a") as f:
-                f.write("\n")
-                f.write(tmp[1])
+            if output0.find("==============") != -1:
+                flag = True
+                tmp = output0.split("==============")
+                with open(bug_file, "a") as f:
+                    f.write("\n")
+                    f.write(tmp[1])
+            if flag:
+                break

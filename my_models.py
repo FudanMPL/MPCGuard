@@ -44,8 +44,8 @@ def train_model_and_get_accuracy_by_xgboost(train_x, train_y, test_x, test_y):
     # print(f'Train set Evaluation Loss: {train_loss:.4f}, Accuracy: {train_accuracy:.4f}')
     # print(f'Test set Evaluation Loss: {test_loss:.4f}, Accuracy: {test_accuracy:.4f}')
     end = time.time()
-    import config
-    config.times['model_train_and_test'] += end - start
+    import tools_and_global_parameters
+    tools_and_global_parameters.timer['model_train_and_test'] += end - start
     return test_accuracy, test_loss
 
 
@@ -103,9 +103,9 @@ class LogicGateNet(nn.Module):
         x = F.relu(x)
         return x
 
-class CombinedModel(nn.Module):
+class MPCNN(nn.Module):
     def __init__(self, input_size, hidden_size=128):
-        super(CombinedModel, self).__init__()
+        super(MPCNN, self).__init__()
         arith_input_size = input_size // 65
         logic_input_size = arith_input_size * 64
 
@@ -201,13 +201,10 @@ class BasicLSTM(nn.Module):
     def __init__(self, input_size, hidden_size=256, num_layers=2, step_size=64):
         super(BasicLSTM, self).__init__()
         self.step_size = step_size
-
         self.seq_len = input_size // step_size
         
-
         if input_size % step_size != 0:
             self.seq_len += 1  
-
 
         self.lstm = nn.LSTM(input_size=step_size, hidden_size=hidden_size, num_layers=num_layers, batch_first=True)
 
@@ -242,6 +239,4 @@ class BasicLSTM(nn.Module):
 
 
 
-Real_World_Classifier = BasicCNN
 
-Ideal_World_Classifier = CombinedModel

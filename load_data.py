@@ -1,10 +1,9 @@
-import config
-from config import *
+from tools_and_global_parameters import *
 import subprocess
 import os
 import numpy as np
 import time
-
+import functionality
 
 
 input_shares_in_ideal_world = {}
@@ -12,14 +11,20 @@ output_shares_in_ideal_world = {}
 adversary_views_in_ideal_world = {}
 
 
-
+def exist_real_review_data_of_secret(secret):
+    if not os.path.exists(my_config['real_view_data_dir'] +"/s-{}/".format(secret)):
+        return False
+    for party in range(my_config['party_number']):
+        if not os.path.exists(my_config['real_view_data_dir'] +"/s-{}/P-{}-view-{}".format(secret, party, my_config['protocol_execution_times'] - 1)):
+            return False
+    return True
 
 def get_views_of_corrupted_party_in_real_world(secret, l=None):
     views = []
-    for i in range(config.collection_data_size):
+    for i in range(my_config['protocol_execution_times']):
         adversary_view = []
-        for party in config.corrupted_party:
-            with open(config.real_data_dir + "/s-{}/P-{}-view-{}".format(secret, party, i), 'r') as f:
+        for party in my_config['corrupted_party']:
+            with open(my_config['real_view_data_dir'] + "/s-{}/P-{}-view-{}".format(secret, party, i), 'r') as f:
                 view = []
                 # read each line as an integer
                 for line in f:
@@ -27,23 +32,36 @@ def get_views_of_corrupted_party_in_real_world(secret, l=None):
                 if l is None:
                     l = len(view)
                 adversary_view = adversary_view + view[:l]
+        adversary_view = pad_adversary_view(adversary_view)
         views.append(adversary_view)
     return views
+
+
+def pad_adversary_view(adversary_view):
+    if 'padding' not in my_config or my_config['padding'] <= 1:
+        return adversary_view
+    pad_length = int(my_config['padding'] * len(adversary_view)) - len(adversary_view)
+    # pad the adversary view to the length of my_config['padding'] * len(adversary_view) with random values
+    if pad_length > 0:
+        pad_values = np.random.randint(-2**63, 2**63, dtype=np.int64, size=pad_length)
+        adversary_view = np.concatenate((adversary_view, pad_values))
+        return adversary_view
+    return adversary_view
 
 
 def run_ideal_protocol(secret):
     adversary_views_in_ideal_world[secret] = []
     input_shares_in_ideal_world[secret] = []
     output_shares_in_ideal_world[secret] = []
-    for i in range(config.ideal_collection_data_size):
-        config.ideal_protocol_functionality(secret)
+    for i in range(my_config['protocol_execution_times']):
+        getattr(functionality, my_config['ideal_program'])(secret)
 
 
 
 def get_output_share_of_victim_party_in_ideal_world(secret):
     result = []
     for output_shares in output_shares_in_ideal_world[secret]:
-        result.append(output_shares[config.victim_party])
+        result.append(output_shares[my_config['victim_party']])
     return result
 
 def get_views_of_corrupted_party_in_ideal_world(secret):
@@ -52,38 +70,39 @@ def get_views_of_corrupted_party_in_ideal_world(secret):
 
 def get_outputs_of_victim_party_in_real_world(secret):
     outputs = []
-    for i in range(config.collection_data_size):
-        with open(config.real_data_dir +"/s-{}/P-{}-output-{}".format(secret, config.victim_party, i), 'r') as f:
+    for i in range(my_config['protocol_execution_times']):
+        with open(my_config['real_view_data_dir'] +"/s-{}/P-{}-output-{}".format(secret, my_config['victim_party'], i), 'r') as f:
             output = int(f.readline())
             outputs.append(output)
     return outputs
 
 
 def run_real_protocol(secret):
-    if config.run_mode == 'debug':
-        return
+
     start_time = time.time()
-    subprocess.run(["rm", "-rf", config.real_data_dir +"/s-{}/".format(secret)] )
-    subprocess.run(["mkdir", "-p", config.real_data_dir+"/s-{}/".format(secret)])
+    subprocess.run(["rm", "-rf", my_config['real_view_data_dir'] +"/s-{}/".format(secret)] )
+    subprocess.run(["mkdir", "-p", my_config['real_view_data_dir']+"/s-{}/".format(secret)])
     logger.info("run real protocol with secret: {}".format(secret))
     commands = []
-    commands.extend(config.real_protocol_execute_program)
+    commands.extend(my_config['real_program'])
     commands.append("--secret")
     commands.append(str(secret))
     commands.append("--try_times")
-    commands.append(str(config.collection_data_size))
+    commands.append(str(my_config['protocol_execution_times']))
     commands.append("--bug_file")
-    commands.append(config.bug_file)
+    commands.append(my_config['bug_file'])
+    commands.append("--real_view_data_dir")
+    commands.append( my_config['real_view_data_dir'] +"/s-{}/".format(secret))
     subprocess.run(commands, text=True)
 
     end_time = time.time()
-    times['run_real_protocol'] += end_time - start_time
+    timer['run_real_protocol'] += end_time - start_time
 
 
 def rerun_with_print_stack_trace(secret, index):
     logger.info("rerun with print stack trace with secret: {} index: {}".format(secret, index))
     commands = []
-    commands.extend(config.real_protocol_execute_program)
+    commands.extend(my_config['real_program'])
     commands.append("--secret")
     commands.append(str(secret))
     commands.append("--try_times")
@@ -91,34 +110,26 @@ def rerun_with_print_stack_trace(secret, index):
     commands.append("--vul_index")
     commands.append(str(index))
     commands.append("--bug_file")
-    commands.append(config.bug_file)
+    commands.append(my_config['bug_file'])
     commands.append("--no-record")
+    commands.append("--real_view_data_dir")
+    commands.append( my_config['real_view_data_dir'] +"/s-{}/".format(secret))
     subprocess.run(commands, text=True)
 
 
 def int64_to_bits(arr):
-    # 获取原始数组的形状
     original_shape = arr.shape
-    
-    # 将数组展平成一维
     arr_flat = arr.ravel()
-    
-    # 定义一个空数组用于存储每个整数的 bit 表示
+
     bit_array = []
-    
-    # 遍历每个整数
+
     for num in arr_flat:
-        # 将 np.int64 转换为 Python 的原生 int 类型
         num = int(num)
-        # 将整数转换为 64 位二进制字符串
-        bits = np.binary_repr(num, width=64)  # 确保使用 64 位表示
-        # 将字符串转换为 list，并映射为整数
+        bits = np.binary_repr(num, width=64) 
         bit_array.append([int(b) for b in bits])
     
-    # 转换为 NumPy 数组
+
     bit_array = np.array(bit_array, dtype=np.int8)
-    
-    # Reshape 回到原始形状，并增加一维存储每个元素的 64 位
     bit_array = bit_array.reshape(*original_shape, 64)
     
     return bit_array
@@ -180,8 +191,8 @@ def dataset_split(views, labels, rate=0.8):
                          
 
 def print_bit_length_of_corrupted_party_view_with_rate(secret, rate):
-    for party in config.corrupted_party:
-        with open(config.real_data_dir +"/s-{}/P-{}-view-0".format(secret, party), 'r') as f:
+    for party in my_config['corrupted_party']:
+        with open(my_config['real_view_data_dir'] +"/s-{}/P-{}-view-0".format(secret, party), 'r') as f:
             view = []
             # read each line as an integer
             for line in f:
@@ -191,7 +202,7 @@ def print_bit_length_of_corrupted_party_view_with_rate(secret, rate):
 
 
 def is_secret_real_data_exist(secret):
-    if not os.path.exists(config.real_data_dir+"/s-{}/".format(secret)):
+    if not os.path.exists(my_config['real_view_data_dir']+"/s-{}/".format(secret)):
         return False
     return True
 

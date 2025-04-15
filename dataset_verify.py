@@ -8,9 +8,9 @@ import torch.nn.functional as F
 import logging
 import time
 
-from config import logger, number_of_epoch
-import config
+from tools_and_global_parameters import *
 import load_data
+import my_models
 from my_models import *
 
 
@@ -25,9 +25,10 @@ def get_real_accuracy(views, labels):
     train_features, train_labels, test_features, test_labels = load_data.dataset_split(views, labels)
     current_test_features = test_features
     current_test_labels = test_labels
-    # return train_model_and_get_accuracy_by_xgboost(train_features, train_labels, test_features, test_labels)
-    # return train_model_and_get_accuracy_by_sr(train_features, train_labels, test_features, test_labels)
-    return train_model_and_get_accuracy(Real_World_Classifier, train_features, train_labels, test_features, test_labels)
+    if my_config['use_model'] == 'xgboost':
+        return train_model_and_get_accuracy_by_xgboost(train_features, train_labels, test_features, test_labels)
+    else:
+        return train_model_and_get_accuracy(getattr(my_models, my_config['use_model']), train_features, train_labels, test_features, test_labels)
 
 
 
@@ -36,8 +37,7 @@ def get_ideal_accuracy(views, labels):
     train_features, train_labels, test_features, test_labels = load_data.dataset_split(views, labels)
     current_test_features = test_features
     current_test_labels = test_labels
-    # return train_model_and_get_accuracy_by_sr(train_features, train_labels, test_features, test_labels)
-    return train_model_and_get_accuracy(Ideal_World_Classifier, train_features, train_labels, test_features, test_labels)
+    return train_model_and_get_accuracy(MPCNN, train_features, train_labels, test_features, test_labels)
 
 
 
@@ -91,7 +91,7 @@ def train_model_and_get_accuracy(Classifier, train_x, train_y, test_x, test_y):
 
     max_accuracy = 0
     # Train the model
-    for epoch in range(number_of_epoch):
+    for epoch in range(my_config['epochs']):
         for X_train, y_train in train_loader:
             # Move batch data to the device
             X_train, y_train = X_train.to(device), y_train.to(device)
@@ -110,7 +110,7 @@ def train_model_and_get_accuracy(Classifier, train_x, train_y, test_x, test_y):
             max_accuracy = accuracy
 
     end_time = time.time()
-    config.times['model_train_and_test'] += end_time - start_time
+    timer['model_train_and_test'] += end_time - start_time
 
     return max_accuracy, loss
 

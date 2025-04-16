@@ -40,7 +40,7 @@ docker build -t mpcguard .
 docker run -it mpcguard bash
 ```
 
-## Usage
+## Usage (in the docker container)
 
 ### Supported Frameworks
 MPCGuard currently supports:

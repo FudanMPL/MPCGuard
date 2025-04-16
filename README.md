@@ -60,7 +60,7 @@ You can test the following protocol without modifying any code:
 - `truncpr` (Probabilistic Truncation)
 
 
-#### 1. Test a single implementation (e.g. ass_eq in Crypten)
+### 1. Test a single implementation (e.g. ass_eq in Crypten)
 
 Step 1. 
 
@@ -93,7 +93,7 @@ python ../../main.py --config=./test.yaml
 ```
 
 
-#### 2. Test with different models 
+### 2. Test with different models 
 
 
 ```sh
@@ -104,7 +104,7 @@ cd /MPCGuard
 The found bugs will be stored in /MPCGuard/frameworks/Crypten/found_bugs_with_different_model/, /MPCGuard/frameworks/TF-Encrypted/found_bugs_with_different_model/, and /MPCGuard/frameworks/MP-SPDZ/found_bugs_with_different_model/
 
 
-#### 3. Test with different thresholds 
+### 3. Test with different thresholds 
 
 
 ```sh
@@ -114,7 +114,7 @@ cd /MPCGuard
 
 The found bugs will be stored in /MPCGuard/frameworks/Crypten/found_bugs_with_different_threshold/, /MPCGuard/frameworks/TF-Encrypted/found_bugs_with_different_threshold/, and /MPCGuard/frameworks/MP-SPDZ/found_bugs_with_different_threshold/
 
-#### 4. Test with different paddings 
+### 4. Test with different paddings 
 
 
 ```
@@ -125,7 +125,7 @@ cd /MPCGuard
 The found bugs will be stored in /MPCGuard/frameworks/Crypten/found_bugs_with_different_padding/, /MPCGuard/frameworks/TF-Encrypted/found_bugs_with_different_padding/, and /MPCGuard/frameworks/MP-SPDZ/found_bugs_with_different_padding/
 
 
-#### 5. Test a new implementation 
+##  Test a new implementation 
 
 Step 1. Place your implementation in /MPCGuard/frameworks/[framework_name]/, and 
 

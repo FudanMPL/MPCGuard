@@ -145,7 +145,7 @@ Step 2. Write a python program (e.g. test_new_protocol.py) that accepts the foll
 --real_view_data_dir  # Path to save collected views
 ```
 
-After executing test_new_protocol.py with the above parameters, it should be able to collect the the parties' view, input and output. See ```MPCGuard/frameworks/MP-SPDZ/test_with_different_model_yaml/ass_eq_with_MPCNN.yaml``` for reference.
+In this step, you may need to manually instrument the code to collect the parties’ views, inputs, and outputs. See ```MPCGuard/frameworks/CrypTen/test_ass_ltz.py``` for reference.
 
 Step 3. Create the corresponding functionality in ```/MPCGuard/functionality.py```
 
@@ -189,7 +189,7 @@ real_view_data_dir: real_view_data/ass_eq/
 epochs: 200
 ```
 
-Step 4. Run
+Step 5. Run
 
 
 ```

@@ -10,4 +10,4 @@ use_model: MPCNN
 run_mode: Detect
 bug_file: found_bugs_with_different_model/MPCNN/ass_eq
 real_view_data_dir: real_view_data/ass_eq/
-epochs: 200
+epochs: 200 

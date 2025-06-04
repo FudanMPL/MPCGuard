@@ -8,7 +8,7 @@ for fw in "${FRAMEWORKS[@]}"; do
 
   cd "$PROJECT_ROOT/frameworks/$fw" || exit 1
   pwd
-
+  rm -rf ./found_bugs_with_different_model
 
   CONFIG_DIR="./test_with_different_model_yaml/"
 

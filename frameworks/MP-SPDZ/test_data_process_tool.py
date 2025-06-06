@@ -16,32 +16,23 @@ def get_data_from_output_str(output, path_format):
         tmp = line.split(" ")
         if tmp[0] != "from" or len(tmp) != 3:
             continue
-
-        if tmp[1] == "input" or tmp[1] == "output":
-            if tmp[2].find(",") != -1:
-                data = tmp[2].split(",")[0]
-            else:
-                data = tmp[2]
-            try:
-                data = int(data)
-            except Exception as e:
-                print(e)
-                print(line)
-                continue
-            filename = path_format.format(tmp[1])
-            with open(filename, "a") as f:
-                f.write(str(data)+"\n")
+        filename = path_format.format("view")
+        if tmp[2].find(",") != -1:
+            data = tmp[2].split(",")
         else:
-            filename = path_format.format("view")
-            data = tmp[2]
+            data = [tmp[2]]
+        for k in data:
             try:
-                data = int(data)
+                k = int(k)
             except Exception as e:
                 print(e)
                 print(line)
                 continue
-            with open(filename, "a") as f:
-                f.write(str(data)+"\n")
+            with open( path_format.format("view"), "a") as f:
+                f.write(str(k)+"\n")
+            if tmp[1] == "input" or tmp[1] == "output":
+                with open( path_format.format(tmp[1]), "a") as f:
+                    f.write(str(k)+"\n")
     # if file do not exist, return False
     if not os.path.exists(path_format.format("input")) or not os.path.exists(path_format.format("output")) or not os.path.exists(path_format.format("view")):
         return False
